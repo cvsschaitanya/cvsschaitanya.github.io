@@ -1,1 +1,102 @@
-<h1>Hello World</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+</head>
+
+<body>
+    <label for="bcws">Budgeted Cost for Work Scheduled:</label>
+    <input type="number" id="bcws" name="bcws"><br><br>
+    <label for="bcwp">Budgeted Cost for Work Performed:</label>
+    <input type="number" id="bcwp" name="bcwp"><br><br>
+    <label for="acwp">Actual Cost for Work Performed:</label>
+    <input type="number" id="acwp" name="acwp"><br><br>
+    <label for="bac">Budget at completion:</label>
+    <input type="number" id="bac" name="bac"><br><br>
+
+    <button id="evalButton" type="button">Evaluate</button>
+
+    <div>
+        <label>By Schedule Variance:</label>
+        <span id="svF"></span>
+    </div>
+    <div>
+        <label>By Cost Variance:</label>
+        <span id="cvF"></span>
+    </div>
+    <div>
+        <label>By Cost Performance Index:</label>
+        <span id="cpiF"></span>
+    </div>
+    <div>
+        <label>By Schedule Performance Index:</label>
+        <span id="spiF"></span>
+    </div>
+
+    <script>
+        function runclick() {
+            var bcws = document.getElementById("bcws").value;
+            var bcwp = document.getElementById("bcwp").value;
+            var acwp = document.getElementById("acwp").value;
+            var bac = document.getElementById("bac").value;
+
+            document.getElementById("bac").value = "23"
+
+            console.log("Hello vxdf")
+
+            var svF = document.getElementById("svF");
+            var cvF = document.getElementById("cvF");
+            var cpiF = document.getElementById("cpiF");
+            var spiF = document.getElementById("spiF");
+
+            sv = bcwp - bcws;
+            if (sv < 0)
+                svF.innerHTML = "Work is Behind Schedule";
+            else if (sv > 0)
+                svF.innerHTML = "work is Ahead of Schedule";
+            else
+                svF.innerHTML = "Work is on time";
+            //Cost Variance
+            cv = bcwp - acwp;
+            if (cv < 0)
+                cvF.innerHTML = "This is cost overrun";
+            else if (cv > 0)
+                cvF.innerHTML = "This is cost underrun/control";
+            else
+                cvF.innerHTML = "The cost is under balance i.e no loss or profit";
+            //Cost performance Index
+            if (acwp == 0)
+                cpiF.innerHTML = "The work has not started yet i.e cannot find cpi/cost efficiency";
+            else {
+                cpi = bcwp / acwp;
+                if (cpi < 1)
+                    cpiF.innerHTML = "This is cost overrun";
+                else if (cpi > 1)
+                    cpiF.innerHTML = "This is cost underrun/control";
+                else
+                    cpiF.innerHTML = "The cost is under balance i.e no loss or profit";
+            }
+            //schedule performance index
+            if (bcws == 0)
+                spiF.innerHTML = "The work is not yet scheduled";
+            else {
+                spi = bcwp / bcws;
+                if (spi < 0)
+                    spiF.innerHTML = "Work is Behind Schedule";
+                else if (spi > 0)
+                    spiF.innerHTML = "work is Ahead of Schedule";
+                else
+                    spiF.innerHTML = "Work is on time";
+            }
+        }
+
+        document.getElementById("evalButton").addEventListener("click", runclick);
+    </script>
+
+</body>
+
+</html>
